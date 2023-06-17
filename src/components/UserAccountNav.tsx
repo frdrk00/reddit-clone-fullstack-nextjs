@@ -1,23 +1,22 @@
 'use client';
 
 import { User } from 'next-auth';
-import { FC } from 'react';
 import {
   DropdownMenu,
+  DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from './ui/DropdownMenu';
-import UserAvatar from './UserAvatar';
-import { DropdownMenuContent } from '@radix-ui/react-dropdown-menu';
+import { UserAvatar } from './UserAvatar';
 import Link from 'next/link';
 import { signOut } from 'next-auth/react';
 
-interface UserAccountNavProps {
+interface UserAccountNavProps extends React.HTMLAttributes<HTMLDivElement> {
   user: Pick<User, 'name' | 'image' | 'email'>;
 }
 
-const UserAccountNav: FC<UserAccountNavProps> = ({ user }) => {
+export function UserAccountNav({ user }: UserAccountNavProps) {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger>
@@ -72,6 +71,4 @@ const UserAccountNav: FC<UserAccountNavProps> = ({ user }) => {
       </DropdownMenuContent>
     </DropdownMenu>
   );
-};
-
-export default UserAccountNav;
+}
