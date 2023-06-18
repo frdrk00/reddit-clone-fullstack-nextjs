@@ -1,25 +1,40 @@
-import { formatTimeToNow } from '@/lib/utils';
-import { Post, User, Vote } from '@prisma/client';
-import { MessageSquare } from 'lucide-react';
-import { FC, useRef } from 'react';
-import EditorOutput from './EditorOutput';
+import { formatTimeToNow } from '@/lib/utils'
+import { Post, User, Vote } from '@prisma/client'
+import { MessageSquare } from 'lucide-react'
+import { FC, useRef } from 'react'
+import EditorOutput from './EditorOutput'
+import PostVoteClient from './post-vote/PostVoteClient'
+
+type PartialVote = Pick<Vote, 'type'>
 
 interface PostProps {
-  subredditName: string;
+  subredditName: string
   post: Post & {
-    author: User;
-    votes: Vote[];
-  };
-  commentAmt: number;
+    author: User
+    votes: Vote[]
+  }
+  commentAmt: number
+  votesAmt: number
+  currentVote?: PartialVote
 }
 
-const Post: FC<PostProps> = ({ subredditName, post, commentAmt }) => {
-  const pRef = useRef<HTMLDivElement>(null);
+const Post: FC<PostProps> = ({
+  subredditName,
+  post,
+  commentAmt,
+  votesAmt,
+  currentVote,
+}) => {
+  const pRef = useRef<HTMLDivElement>(null)
 
   return (
     <div className="rounded-md bg-white shadow">
       <div className="px-6 py-4 flex justify-between">
-        {/* TODO: PostVotes */}
+        <PostVoteClient
+          postId={post.id}
+          initialVote={currentVote?.type}
+          initialVotesAmt={votesAmt}
+        />
 
         <div className="w-0 flex-1">
           <div className="max-h-40 mt-1 text-xs text-gray-500">
@@ -57,7 +72,7 @@ const Post: FC<PostProps> = ({ subredditName, post, commentAmt }) => {
         </div>
       </div>
 
-      <div className="bg-gray-500 z-20 text-sm p-4 sm:px-6">
+      <div className="bg-gray-50 z-20 text-sm p-4 sm:px-6">
         <a
           className="w-fit flex items-center gap-2"
           href={`/r/${subredditName}/post/${post.id}`}
@@ -66,7 +81,7 @@ const Post: FC<PostProps> = ({ subredditName, post, commentAmt }) => {
         </a>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default Post;
+export default Post
