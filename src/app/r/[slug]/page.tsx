@@ -1,20 +1,20 @@
-import MiniCreatePost from '@/components/MiniCreatePost';
-import PostFeed from '@/components/PostFeed';
-import { INFINITE_SCROLLING_PAGINATION_RESULTS } from '@/config';
-import { getAuthSession } from '@/lib/auth';
-import { db } from '@/lib/db';
-import { notFound } from 'next/navigation';
+import MiniCreatePost from '@/components/MiniCreatePost'
+import PostFeed from '@/components/PostFeed'
+import { INFINITE_SCROLLING_PAGINATION_RESULTS } from '@/config'
+import { getAuthSession } from '@/lib/auth'
+import { db } from '@/lib/db'
+import { notFound } from 'next/navigation'
 
 interface PageProps {
   params: {
-    slug: string;
-  };
+    slug: string
+  }
 }
 
 const Page = async ({ params }: PageProps) => {
-  const { slug } = params;
+  const { slug } = params
 
-  const session = await getAuthSession();
+  const session = await getAuthSession()
 
   const subreddit = await db.subreddit.findFirst({
     where: { name: slug },
@@ -26,13 +26,17 @@ const Page = async ({ params }: PageProps) => {
           comments: true,
           subreddit: true,
         },
+        orderBy: {
+          createdAt: 'desc',
+        },
+
         take: INFINITE_SCROLLING_PAGINATION_RESULTS,
       },
     },
-  });
+  })
 
   if (!subreddit) {
-    return notFound();
+    return notFound()
   }
 
   return (
@@ -43,7 +47,7 @@ const Page = async ({ params }: PageProps) => {
       <MiniCreatePost session={session} />
       <PostFeed initialPosts={subreddit.posts} subredditName={subreddit.name} />
     </>
-  );
-};
+  )
+}
 
-export default Page;
+export default Page
