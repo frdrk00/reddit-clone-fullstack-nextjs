@@ -57,7 +57,7 @@ const SubscribeLeaveToggle: FC<SubscribeLeaveToggleProps> = ({
     },
   });
 
-  const { mutate: unsubscribe, isLoading: isUnSubLoading } = useMutation({
+  const { mutate: unsubscribe, isLoading: isUnsubLoading } = useMutation({
     mutationFn: async () => {
       const payload: SubscribeToSubredditPayload = {
         subredditId,
@@ -93,7 +93,7 @@ const SubscribeLeaveToggle: FC<SubscribeLeaveToggleProps> = ({
 
   return isSubscribed ? (
     <Button
-      isLoading={isSubLoading}
+      isLoading={isUnsubLoading}
       onClick={() => unsubscribe()}
       className="w-full mt-1 mb-4"
     >
