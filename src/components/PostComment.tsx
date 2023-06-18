@@ -108,40 +108,37 @@ const PostComment: FC<PostCommentProps> = ({
 
         {isReplying ? (
           <div className="grid w-full gap-1.5">
-            <Label>Your Comment</Label>
-            <div className="grid w-full gap-1.5">
-              <Label htmlFor="comment">Your Comment</Label>
-              <div className="mt-2">
-                <Textarea
-                  id="comment"
-                  value={input}
-                  onChange={(e) => setInput(e.target.value)}
-                  rows={1}
-                  placeholder="What are your thoughts?"
-                />
-                <div className="mt-2 flex justify-end gap-2">
-                  <Button
-                    tabIndex={-1}
-                    variant="subtle"
-                    onClick={() => setIsReplying(false)}
-                  >
-                    Cancel
-                  </Button>
-                  <Button
-                    isLoading={isLoading}
-                    disabled={input.length === 0}
-                    onClick={() => {
-                      if (!input) return
-                      postComment({
-                        postId,
-                        text: input,
-                        replyToId: comment.replyToId ?? comment.id,
-                      })
-                    }}
-                  >
-                    Post
-                  </Button>
-                </div>
+            <Label htmlFor="comment">Your Comment</Label>
+            <div className="mt-2">
+              <Textarea
+                id="comment"
+                value={input}
+                onChange={(e) => setInput(e.target.value)}
+                rows={1}
+                placeholder="What are your thoughts?"
+              />
+              <div className="mt-2 flex justify-end gap-2">
+                <Button
+                  tabIndex={-1}
+                  variant="subtle"
+                  onClick={() => setIsReplying(false)}
+                >
+                  Cancel
+                </Button>
+                <Button
+                  isLoading={isLoading}
+                  disabled={input.length === 0}
+                  onClick={() => {
+                    if (!input) return
+                    postComment({
+                      postId,
+                      text: input,
+                      replyToId: comment.replyToId ?? comment.id,
+                    })
+                  }}
+                >
+                  Post
+                </Button>
               </div>
             </div>
           </div>
