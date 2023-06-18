@@ -43,7 +43,7 @@ const UserNameForm: FC<UserNameFormProps> = ({ user }) => {
     mutationFn: async ({ name }: UsernameRequest) => {
       const payload: UsernameRequest = { name }
 
-      const { data } = await axios.patch(`*/api/username`, payload)
+      const { data } = await axios.patch(`/api/username`, payload)
       return data
     },
     onError: (err) => {
